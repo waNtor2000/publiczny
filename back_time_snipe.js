@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         back_time_snipe
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.12
 // @description  Pokazuje czas powrotu w podglącie rozkazu
 // @author       You
 // @match        https://pl182.plemiona.pl/game.php?village=*&screen=info_command&id=*&type=other
