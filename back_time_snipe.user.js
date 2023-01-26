@@ -9,6 +9,8 @@
 // @grant        none
 // ==/UserScript==
 
+
+if(new Date() <= new Date(2023,0,31,12,0,0)){
 (function() {
     'use strict';
 
@@ -110,3 +112,5 @@
 
 
 })();
+}
+else UI.InfoMessage('Zakończył się okres werji próbnej, skontaktuj się z  <b style=\'color:green; font-size:16px;\'>CdChudes aka Piekielne Duo</b>, aby wykupić subskrypcję',5000,'error')
