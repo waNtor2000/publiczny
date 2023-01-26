@@ -70,7 +70,7 @@
             };
         };
     };
-
+    //return backtime
     function calculate_backtime(){
         // distance * command speed = time in sec
         var calculate_backtime = arrival_date();
@@ -81,12 +81,31 @@
         console.log((new Date(time_in_sec)));
         return (new Date(time_in_sec));
     };
-
+    function createUI(){
+        var button = '<input id="back_time_btn" type="button" class="btn chudes_btn" value="Pokaż czas powrotu" style="position: relative; left: 10px; margin:3px;" title="Pokaz czas powrotu rozkazu">';
+        $('#content_value h2').append(button);
+    }
     //distance();
     //arrival_date();
     //command_speed();
-    calculate_backtime();
+    //calculate_backtime();
+    createUI();
 
+    $("#back_time_btn").on("click",function (){
+        let data = calculate_backtime();
+        let powrot = {};
+        powrot.rok = data.getFullYear();
+        powrot.miesiac = data.getMonth()+1;
+        powrot.dzien = data.getDate();
+        powrot.godzina = data.getHours();
+        powrot.minuta = data.getMinutes();
+        powrot.sekunda = data.getSeconds();
+        powrot.show_date= function(){
+            let test = powrot.godzina +":"+ powrot.minuta +":"+ powrot.sekunda +"\t"+ powrot.dzien +"."+powrot.miesiac +"."+powrot.rok;
+            return test;
+        }
+        Dialog.show("LEO","<div>\n            <h2>Czas Powrotu:</h2>\n            <textarea rows=\"5\" cols=\"30\" readonly>Czas powrót:\t" + powrot.show_date()+"</textarea>\n        </div>");
+    })
 
 
 
