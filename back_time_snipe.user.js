@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         back_time_snipe
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  Pokazuje czas powrotu w podglącie rozkazu
+// @version      1.0 
+// @description  Pokazuje czas powrotu w podglądzie rozkazu. Wersja działająca
 // @author       CdChudes
 // @match        https://*.plemiona.pl/game.php?village=*&screen=info_command&id=*&type=other
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=plemiona.pl
@@ -101,7 +101,7 @@
         powrot.minuta = data.getMinutes();
         powrot.sekunda = data.getSeconds();
         powrot.show_date= function(){
-            let test = powrot.godzina +":"+ powrot.minuta +":"+ powrot.sekunda +"\t"+ powrot.dzien +"."+powrot.miesiac +"."+powrot.rok;
+            let test = powrot.godzina +":"+ powrot.minuta +":"+ powrot.sekunda +"\tDnia "+ powrot.dzien +"."+powrot.miesiac +"."+powrot.rok;
             return test;
         }
         Dialog.show("LEO","<div>\n            <h2>Czas Powrotu:</h2>\n            <textarea rows=\"5\" cols=\"30\" readonly>Czas powrót:\t" + powrot.show_date()+"</textarea>\n        </div>");
