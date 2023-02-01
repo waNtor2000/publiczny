@@ -1,0 +1,27 @@
+{
+	"acces_players": [{
+			"id": 6420109,
+			"nick": "Piekielne Duo"
+		},
+		{
+			"id": 0,
+			"nick": "Smith"
+		}
+	],
+	"acces_tribals": [{
+			"id": [
+				65
+			],
+			"name": "KEY",
+			"word": 182
+		},
+		{
+			"id": [
+
+			],
+			"name": "Tajemnica",
+			"word": 186
+		}
+
+	]
+}
