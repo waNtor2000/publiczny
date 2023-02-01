@@ -6,8 +6,8 @@
 */
 
 
-$.ajax({
-    url: "https://skrypty.wantor.pl/htacces/list.JSON",
+var dane = $.ajax({
+    url: "https://skrypty.wantor.pl/htacces/acces.php",
     dataType: "json",
     success: function(data) {
       console.log(data);
