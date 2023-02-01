@@ -7,7 +7,7 @@
 
 
 $.ajax({
-    url: "list.json",
+    url: "./list.json",
     dataType: "json",
     success: function(data) {
       console.log(data);
