@@ -1,7 +1,8 @@
 {
 	"acces_players": [{
 			"id": 6420109,
-			"nick": "Piekielne Duo"
+			"nick": "Piekielne Duo",
+			"expires":  "2023-3-5"
 		},
 		{
 			"id": 0,
@@ -13,11 +14,11 @@
 				65
 			],
 			"name": "KEY",
-			"word": 182
+			"word": "pl182"
 		},
 		{
-			"id": [
-
+			"id": [ 1,
+					2
 			],
 			"name": "Tajemnica",
 			"word": 186
