@@ -1,6 +1,6 @@
 /* 
   Author : CdChudes
-  Desc : checking JSON list for acces player od ID
+  Desc : checking JSON list of ID player or allies ID to get perrmision ussage scipts
   Version: 0.1
   Date : 1.02.2023
 */
