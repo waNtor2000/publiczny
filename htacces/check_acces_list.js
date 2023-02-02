@@ -62,11 +62,11 @@ function getData(){
 };
 // SPRAWDZANIE CZY GRACZ NA LISCIE
 // Jeśli jest to dodaje
-function checkPlayerOnList(){
+function checkPlayerOnList(cName){
   getList();
   for(i = 0; i<= list.acces_players.length-1;i++){
     if(list.acces_players[i].id==game_data.player.id){
-      setCookie(cName,list.acces_players[i].id,list.acces_players[i].expires);
+      setCookie(cName, list.acces_players[i].id, list.acces_players[i].expires);
       return 0;
     }  
   }
@@ -75,11 +75,11 @@ function checkPlayerOnList(){
 };
 // SPRAWDZANIE CZY PLEMIE NA LIŚCIE 
 // Jeśli jest to dodaje
-function checkAllyOnList(){
+function checkAllyOnList(cName){
   getList();
   for(i = 0; i<= list.acces_tribals.length-1;i++){
     if((list.acces_tribals[i].id==game_data.player.ally)&&(list.acces_tribals[i].world==game_data.world)){
-      setCookie(cName,list.acces_tribals[i].id,list.acces_players[i].expires);
+      setCookie(cName, list.acces_tribals[i].id, list.acces_players[i].expires);
       return 0;
     } 
   }
@@ -91,17 +91,17 @@ function checkAllyOnList(){
 // KONFIGURACJA
 
 $(function(){
-  let cName = 'player_id'
+  var cName = 'player_id'
   cookieExist(cName); //znaleźć dla funkcji lepsze miejsce, nie wiem czy w ifie pod spodem
   if(getCookie(cName)==game_data.player.id ){
     console.log("Przyznano dostęp")
     return 0;
   }
-  else if(checkPlayerOnList()==0){ 
+  else if(checkPlayerOnList(cName)==0){ 
     console.log('Przyznano dostep nowego gracza')
     return 0;
   }
-  else if(checkAllyOnList()==0){
+  else if(checkAllyOnList(cName)==0){
    console.log('Przyznano dostep nowego plemienia')
    return 0;
   }
@@ -111,3 +111,8 @@ $(function(){
   }
   
 });
+
+/* TO DO
+- check player and check ally functions to repair,
+rozwiazac logike albo naprawic ustawianie ciasteczek
+*/
