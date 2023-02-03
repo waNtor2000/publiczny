@@ -5,7 +5,7 @@
   Date : 1.02.2023
 */
 
-//var list;
+var list;
 /* let playerId;
 let allyId;
 let world; */
@@ -63,6 +63,7 @@ function getData(){
 // SPRAWDZANIE CZY GRACZ NA LISCIE
 // Jeśli jest to dodaje
 function checkPlayerOnList(cName){
+  getList();
   for(i = 0; i<= list.acces_players.length-1;i++){
     if(list.acces_players[i].id==game_data.player.id){
       setCookie(cName, list.acces_players[i].id, list.acces_players[i].expires);
@@ -75,6 +76,7 @@ function checkPlayerOnList(cName){
 // SPRAWDZANIE CZY PLEMIE NA LIŚCIE 
 // Jeśli jest to dodaje
 function checkAllyOnList(cName){
+  getList();
   for(i = 0; i<= list.acces_tribals.length-1;i++){
     if((list.acces_tribals[i].id==game_data.player.ally)&&(list.acces_tribals[i].world==game_data.world)){
       setCookie(cName, list.acces_tribals[i].id, list.acces_players[i].expires);
@@ -90,14 +92,12 @@ function checkAllyOnList(cName){
 
 $(function(){
   var cName = 'player_id'
-  var list;
   cookieExist(cName); //znaleźć dla funkcji lepsze miejsce, nie wiem czy w ifie pod spodem
   if(getCookie(cName)==game_data.player.id ){
     console.log("Przyznano dostęp, zwraca 0")
     return 0;
   }
   else if(checkPlayerOnList(cName)==0){ 
-    $.getList();
     console.log('Przyznano dostep nowego gracza, check player')
     return 0;
   }
