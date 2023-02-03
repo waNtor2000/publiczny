@@ -5,10 +5,7 @@
   Date : 1.02.2023
 */
 
-var list;
-/* let playerId;
-let allyId;
-let world; */
+// var list;
 function getList(){
   $.ajax({
     url: "https://skrypty.wantor.pl/htacces/acces.php",
@@ -19,6 +16,7 @@ function getList(){
     }
   });
 };
+
 
 function setCookie(cName,cValue,exDays){
   let data = new Date(exDays);
@@ -90,13 +88,15 @@ function checkAllyOnList(cName){
 
 // KONFIGURACJA
 
-$(function(){
+function VALID(){
+  var list;
   var cName = 'player_id'
   cookieExist(cName); //znaleźć dla funkcji lepsze miejsce, nie wiem czy w ifie pod spodem
   if(getCookie(cName)==game_data.player.id ){
     console.log("Przyznano dostęp, zwraca 0")
     return 0;
   }
+
   else if(checkPlayerOnList(cName)==0){ 
     console.log('Przyznano dostep nowego gracza, check player')
     return 0;
@@ -107,12 +107,12 @@ $(function(){
   }
   else {
     console.log('Nie ma cie na liście, return ')
-    // UI.InfoMessage("Nie masz dostepu do skryptu!",5000,'error');
+    UI.InfoMessage("Nie masz dostepu do skryptu!",5000,'error');
     return 1;
   }
   
-});
-
+};
+VALID();
 /* TO DO
 - check player and check ally functions to repair,
 rozwiazac logike albo naprawic ustawianie ciasteczek
