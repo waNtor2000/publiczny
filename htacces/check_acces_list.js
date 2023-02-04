@@ -6,7 +6,7 @@
 */
 
 
-const getList = async () => {
+getList = async () => {
   await $.ajax({
     url: "https://skrypty.wantor.pl/htacces/acces.php",
     dataType: "json",
