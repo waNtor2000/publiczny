@@ -5,9 +5,9 @@
   Date : 1.02.2023
 */
 
-// var list;
-function getList(){
-  $.ajax({
+
+const getList = async () => {
+  await $.ajax({
     url: "https://skrypty.wantor.pl/htacces/acces.php",
     dataType: "json",
     success: function(data) {
@@ -16,14 +16,11 @@ function getList(){
     }
   });
 };
-
-
 function setCookie(cName,cValue,exDays){
-  let data = new Date(exDays);
-  document.cookie = cName + "="+ cValue + ";" + data + ";path=/";
+  let data = new Date(exDays).toUTCString();
+  document.cookie = cName + "="+ cValue + ";expires=" + data + ";path=/";
   console.log(data);
 };
-
 function cookieExist(cName){
   if (document.cookie.includes(cName)) {
     // console.log("Cookie o nazwie " + searchedCookie + " zostało znalezione.");
@@ -32,7 +29,6 @@ function cookieExist(cName){
       document.cookie = cName+"=8937O13123";
   }
 }
-
 function getCookie(cName){
   let ca = document.cookie.split(';');
   for(let i=0;i<=ca.length;i++){
@@ -61,10 +57,10 @@ function getData(){
 // SPRAWDZANIE CZY GRACZ NA LISCIE
 // Jeśli jest to dodaje
 function checkPlayerOnList(cName){
-  getList();
+  // getList();
   for(i = 0; i<= list.acces_players.length-1;i++){
     if(list.acces_players[i].id==game_data.player.id){
-      setCookie(cName, list.acces_players[i].id, list.acces_players[i].expires);
+      setCookie(cName, list.acces_players[i].id, new Date(list.acces_players[i].expires));
       return 0;
     }  
   }
@@ -74,7 +70,7 @@ function checkPlayerOnList(cName){
 // SPRAWDZANIE CZY PLEMIE NA LIŚCIE 
 // Jeśli jest to dodaje
 function checkAllyOnList(cName){
-  getList();
+  // getList();
   for(i = 0; i<= list.acces_tribals.length-1;i++){
     if((list.acces_tribals[i].id==game_data.player.ally)&&(list.acces_tribals[i].world==game_data.world)){
       setCookie(cName, list.acces_tribals[i].id, list.acces_players[i].expires);
@@ -84,12 +80,10 @@ function checkAllyOnList(cName){
   return 1;
 };
 
-
-
 // KONFIGURACJA
 
-function VALID(){
-  var list;
+async function VALID(){
+
   var cName = 'player_id'
   cookieExist(cName); //znaleźć dla funkcji lepsze miejsce, nie wiem czy w ifie pod spodem
   if(getCookie(cName)==game_data.player.id ){
@@ -97,18 +91,22 @@ function VALID(){
     return 0;
   }
 
-  else if(checkPlayerOnList(cName)==0){ 
-    console.log('Przyznano dostep nowego gracza, check player')
-    return 0;
-  }
-  else if(checkAllyOnList(cName)==0){
-   console.log('Przyznano dostep nowego plemienia, check ally')
-   return 0;
-  }
-  else {
-    console.log('Nie ma cie na liście, return ')
-    UI.InfoMessage("Nie masz dostepu do skryptu!",5000,'error');
-    return 1;
+  else{
+      var list;
+      await getList();
+      if(checkPlayerOnList(cName)==0){ 
+        console.log('Przyznano dostep nowego gracza, check player')
+        return 0;
+      }
+      else if(checkAllyOnList(cName)==0){
+      console.log('Przyznano dostep nowego plemienia, check ally')
+      return 0;
+      }
+      else {
+        console.log('Nie ma cie na liście, return ')
+        UI.InfoMessage("Nie masz dostepu do skryptu!",5000,'error');
+        return 1;
+      }
   }
   
 };
