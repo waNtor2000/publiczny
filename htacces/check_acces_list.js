@@ -41,7 +41,7 @@ function getCookie(cName){
       UI.InfoMessage("Nie masz dostepu do skryptu!",5000,'error')
      
     } */
-    console.log("obrót:"+i);
+    // console.log("obrót:"+i);
   };
   return 1;
 };
@@ -64,7 +64,7 @@ function checkPlayerOnList(cName){
       return 0;
     }  
   }
-  console.log('Brak dostępu')
+  //console.log('Brak dostępu')
   return 1;
 };
 // SPRAWDZANIE CZY PLEMIE NA LIŚCIE 
@@ -87,31 +87,33 @@ async function VALID(){
   var cName = 'player_id'
   cookieExist(cName); //znaleźć dla funkcji lepsze miejsce, nie wiem czy w ifie pod spodem
   if(getCookie(cName)==game_data.player.id ){
-    console.log("Przyznano dostęp, zwraca 0")
-    return 0;
+    // console.log("Przyznano dostęp")
+    return true;
   }
 
   else{
       var list;
       await getList();
       if(checkPlayerOnList(cName)==0){ 
-        console.log('Przyznano dostep nowego gracza, check player')
-        return 0;
+        // console.log('Przyznano dostep nowego gracza, check player')
+        return true;
       }
       else if(checkAllyOnList(cName)==0){
-      console.log('Przyznano dostep nowego plemienia, check ally')
-      return 0;
+      // console.log('Przyznano dostep nowego plemienia, check ally')
+      return true;
       }
       else {
-        console.log('Nie ma cie na liście, return ')
-        UI.InfoMessage("Nie masz dostepu do skryptu!",5000,'error');
-        return 1;
+        // console.log('Nie ma cie na liście, return ')
+        UI.InfoMessage("Nie masz dostepu do skryptu! \n Skontaktuj się z twórcą ",5000,'error');
+        console.error("No perrmission to use this script")
+        return false;
       }
   }
   
 };
-VALID();
-/* TO DO
+var GLOBAL = VALID().then(wynik => GLOBAL=wynik);
+// console.log(GLOBAL)
+/* 
 - check player and check ally functions to repair,
 rozwiazac logike albo naprawic ustawianie ciasteczek
 */
