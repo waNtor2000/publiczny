@@ -92,8 +92,7 @@ async function VALID(){
   }
 
   else{
-      var list;
-      await getList();
+      var list = await getList();
       if(checkPlayerOnList(cName)==0){ 
         // console.log('Przyznano dostep nowego gracza, check player')
         return true;
