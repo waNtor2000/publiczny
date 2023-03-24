@@ -26,12 +26,13 @@
             village.coord = data[i].getElementsByClassName('village_anchor contexted')[0].outerText.trim().slice(-12, -5);
             village.vId = data[i].getElementsByClassName('village_anchor contexted')[0].getAttribute('data-id');
             village.vTag = data[i].getElementsByClassName('village_anchor contexted')[0].outerText.trim();
-             if(data[i].getElementsByTagName('a').length>2){
+            if(data[i].getElementsByTagName('a').length>2){
                 village.owner.nick = data[i].querySelectorAll('a')[2].outerHTML;
-                village.owner.tribal = data[i].querySelectorAll('a')[3].outerHTML;
+                village.owner.tribal =" [" +data[i].querySelectorAll('a')[3].outerHTML+ "]";
             }
             else{
                 village.owner.nick= "";
+                village.owner.tribal= "";
             }
             // zbiórka wojsk
             village.spear = parseInt(data[i].children[2].outerText);
@@ -107,7 +108,7 @@
         if(game_data.units[3]==="archer"){
             var content = `<table class="vis" width="100%"><tbody><th>Kordy</th><th>Pik</th><th> Miecz</th> <th>Łucznik</th> <th>Zwiad</th> <th>CK</th>`;
                 info.forEach(function(village) {
-                content += `<tr class="${row_class[row_number%2]}"><td> <a href="/game.php?screen=info_village&amp;id=${village.vId}">` + village.vTag + '</a>\n'+ village.owner.nick +'</td>' +
+                content += `<tr class="${row_class[row_number%2]}"><td> <a href="/game.php?screen=info_village&amp;id=${village.vId}">` + village.vTag + '</a>\n'+ village.owner.nick + village.owner.tribal +'</td>' +
                             '<td>' + village.spear + '</td>' +
                             '<td>' + village.sword + '</td>' +
                             '<td>' + village.archer + '</td>' +
