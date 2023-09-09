@@ -188,7 +188,7 @@ if (location.href.indexOf("screen=overview_villages") == -1 && location.href.ind
             }
         }
     })
-    document.querySelector("#incomings_table > tbody > tr:last-child > th:nth-child(2) > input:nth-child(2)").onclick = async function(){await separeteDataTrops()};
+    document.querySelector("#incomings_table > tbody > tr:last-child > th:last-child > input:last-child").onclick = separeteDataTrops();
 }
 
 function check(name, nr) {
@@ -288,7 +288,7 @@ function sendData(dane, nick_id){
     })
     .then(response => response.text())
     .then(data => {
-        console.log(data); // Odpowiedź z serwera
+        // console.log(data); // Odpowiedź z serwera
     })
     .catch(error => {
         console.error('Błąd:', error);
