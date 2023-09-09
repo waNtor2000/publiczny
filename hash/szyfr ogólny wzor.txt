@@ -1,0 +1,17 @@
+    // ==UserScript==
+
+// ==/UserScript==
+
+
+// if(game_data.player.ally==1234 && game_data.world=="pl190"){
+//if(game_data.player.id==674336545 && game_data.world=="pl190"){
+
+let autor = `<p style="text-align:center; position:relative; top:10px;border: 1px solid black;border-radius: 12px;color:white;padding: 5px;background: radial-gradient(circle at center center, #8E2DE2 0%, #4A00E0 100%);">Skrypt stworzony przez CdChudes#3372(discord)</p>`
+if((game_data.player.ally==160 ||  game_data.player.ally==189) && game_data.world=="pl190"){
+
+//skrypt
+else{
+    UI.InfoMessage("Nie masz dostępu do tego skryptu" + autor,
+    5000,
+    "error")
+}

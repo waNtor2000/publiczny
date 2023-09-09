@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Wysyłanie tekstu na serwer</title>
+</head>
+<body>
+    <form id="myForm">
+        <input type="text" id="textToSubmit" placeholder="Wprowadź tekst" />
+        <button type="submit">Wyślij</button>
+    </form>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            
+            const textToSave = document.getElementById('textToSubmit').value;
+            
+            // Wyślij tekst na serwer za pomocą żądania HTTP POST
+            fetch('/saveText.php', {
+                method: 'POST',
+                body: textToSave
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // Odpowiedź z serwera
+            })
+            .catch(error => {
+                console.error('Błąd:', error);
+            });
+        });
+    </script>
+</body>
+</html>
