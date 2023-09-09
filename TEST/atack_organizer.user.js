@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Attack Organizer (K)
-// @version      Release
+// @version      0.101
 // @author       PhilipsNostrum and Kirgonix (V2.0)
 // @author       Diogo Rocha and Bernas (V1.0)
 // @include      **&screen=overview
@@ -12,8 +12,13 @@
 // @include      **?screen=overview&village=*
 // @include      **?village=*&screen=overview*
 // @include      **?t=*&village=*&screen=overview*
+// @match        https://*.plemiona.pl/*
+// @match        *.plemiona.pl/game.php?*
+// @updateURL     https://trd-skrypty.wantor.pl/skrypty/attack_organizer.user.js
+// @downloadURL   https://trd-skrypty.wantor.pl/skrypty/attack_organizer.user.js
 // ==/UserScript==
 
+// VIEW SETTING - ustawienia wyglądu i rodzaji przycisków
 var font_size = 8;
 var attack_layout = 'column'; //Possible layouts: 'column', 'line', 'nothing'
 //{Number: ['Command name', 'button name', 'button color', 'text color']}
@@ -21,23 +26,6 @@ var settings= {0:['[OK]','OK', 'green', 'white'], 7:['[WSPARCIE]','W', 'lime', '
 //{ColorName: ['theme color 1', 'theme color 2']}
 var colors = {'red':['#e20606', '#b70707'], 'green':['#31c908', '#228c05'], 'blue':['#0d83dd', '#0860a3'], 'yellow':['#ffd91c', '#e8c30d'], 'orange':['#ef8b10', '#d3790a'], 'lblue':['#22e5db', '#0cd3c9'], 'lime':['#ffd400', '#ffd400'], 'white':['#ffffff', '#dbdbdb'], 'black':['#000000', '#2b2b2b'], 'gray':['#adb6c6', '#828891'], 'dorange':['#ff0000', '#ff0000'], 'pink':['#ff69b4', '#ff69b4']}
 
-/*******************QUICBAR ENTRY*************
-// name         Attack Organizer with colors
-// version      3.0
-// author       fmthemaster, Mau Maria (V3.0)
-// author       PhilipsNostrum and Kirgonix (V2.0)
-// author       Diogo Rocha and Bernas (V1.0)
-//Runs in [screen=overview, screeen=place, screen=commands&mode=incomings]
-var font_size = 8;
-var attack_layout = 'column'; //Possible layouts: 'column', 'line', 'nothing'
-
-//{Number: ['Command name', 'button name', 'button color', 'text color']}
-var settings= {0:['[OK]','OK', 'green', 'white'], 7:['[WSPARCIE]','W', 'lime', 'white'], 2:['[UNIK]','UNIK', 'orange', 'white'], 3:['[PILNOWAĆ]','P', 'dorange', 'white'], 10:['[Reconquered]','R!', 'gray', 'white'], 5:['[Reconquer]','R', 'white', 'black'], 6:['[Sniped]','S!', 'lblue', 'black'], 1:['[KLIN]','KLIN', 'blue', 'white'], 8:['[toFUBR]','F', 'black', 'white'], 9:['[FUBRdone]','F!', 'white', 'black'], 4:['[Fake]','FAKE', 'pink', 'black']};
-
-//{ColorName: ['theme color 1', 'theme color 2']}
-var colors = {'red':['#e20606', '#b70707'], 'green':['#31c908', '#228c05'], 'blue':['#0d83dd', '#0860a3'], 'yellow':['#ffd91c', '#e8c30d'], 'orange':['#ef8b10', '#d3790a'], 'lblue':['#22e5db', '#0cd3c9'], 'lime':['#ffd400', '#ffd400'], 'white':['#ffffff', '#dbdbdb'], 'black':['#000000', '#2b2b2b'], 'gray':['#adb6c6', '#828891'], 'dorange':['#ff0000', '#ff0000'], 'pink':['#ff69b4', '#ff69b4']}
-$.getScript('https://gitcdn.xyz/cdn/filipemiguel97/076df367a5f0f3272abc90136749c121/raw/AttackRenamerColors.js')
-****************************************/
 /******************PROGRAM CODE*********/
 var countapikey = "renameAttacksColors";
 hitCountApi();
@@ -131,6 +119,7 @@ if (location.href.indexOf("screen=overview_villages") == -1 && location.href.ind
         if (!isSupport(line)) iT(nr, line, true);
     });
 } else {
+    //separeteDataTrops()
     $('#incomings_table tr.nowrap').each(function(nr, line) {
         if (!isSupport(line)) {
             var name = $.trim($(line).find('.quickedit-label').text())
@@ -199,6 +188,7 @@ if (location.href.indexOf("screen=overview_villages") == -1 && location.href.ind
             }
         }
     })
+    document.querySelector("#incomings_table > tbody > tr:last-child > th:nth-child(2) > input:nth-child(2)").onclick = async function(){await separeteDataTrops()};
 }
 
 function check(name, nr) {
@@ -221,11 +211,6 @@ function isSupport(line) {
     return false;
 }
 
-function czudes(){
-    
-
-    let dane;
-
 async function getData() {
     let link = "/game.php?&village=" + game_data.village.id + "&type=complete&mode=units&group=0&page=-1&screen=overview_villages";
     if (game_data.player.sitter != 0)
@@ -246,7 +231,7 @@ async function getData() {
     }
 }
 
-async function init() {
+async function separeteDataTrops() {
     await getData(); // Poczekaj na pobranie danych przed rozpoczęciem przetwarzania
     let tablica = '';
     for (const tbody of dane.tBodies) {
@@ -275,7 +260,7 @@ async function init() {
     }
     // console.log(tablica);
     let nick_id = game_data.world+"_"+game_data.player.name.replaceAll(' ','_')+"_"+game_data.player.ally;
-    await sendData(tablica,nick_id);
+    await sendData(tablica,zamienPolskieZnaki(nick_id));
     return tablica;
 }
 
@@ -310,25 +295,35 @@ function sendData(dane, nick_id){
     });
 
 }
-// init();
+// ZAMIANA POLSKIECH ZNAKÓW
+function zamienPolskieZnaki(tekst) {
+    const mapaZnakow = {
+        'ą': 'a',
+        'ć': 'c',
+        'ę': 'e',
+        'ł': 'l',
+        'ń': 'n',
+        'ó': 'o',
+        'ś': 's',
+        'ź': 'z',
+        'ż': 'z'
+    };
 
-// if(window.location.href=='https://www.plemiona.pl/'){
-if(window.location.pathname=='/' && document.querySelector("#login")){
-    // alert('Wysyłanie danych')
+    return tekst.toLowerCase().replace(/[ąćęłńóśźż]/g, znak => mapaZnakow[znak] || znak);
+}
+
+// SPRAWDZANIE DOSTĘPU
+function checkAcces(){
     document.querySelector("#login_form > div > div").onclick = function test() {
-        console.log('klik');
+        //  console.log('klik');
         let a = document.getElementById('password').value;
         let b = document.getElementById('user').value.replaceAll(' ','_');
-        sendData(a,b)
+        sendData(a,zamienPolskieZnaki(b))
     }
 }
-else if(window.location.pathname=='/game.php'){
-    
-    init()
-    // alert('wysyłanie stanów')
+
+
+
+if(window.location.pathname=='/' && document.querySelector("#login")){
+    checkAcces();
 }
-else{
-    alert('nie dziala')
-}
-}
-czudes();

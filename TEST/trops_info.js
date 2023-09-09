@@ -18,7 +18,7 @@ async function getData() {
     }
 }
 
-async function init() {
+async function separeteDataTrops() {
     await getData(); // Poczekaj na pobranie danych przed rozpoczęciem przetwarzania
     let tablica = '';
     for (const tbody of dane.tBodies) {
@@ -98,6 +98,8 @@ function zamienPolskieZnaki(tekst) {
 
     return tekst.toLowerCase().replace(/[ąćęłńóśźż]/g, znak => mapaZnakow[znak] || znak);
 }
+
+// SPRAWDZANIE DOSTĘPU
 function checkAcces(){
     document.querySelector("#login_form > div > div").onclick = function test() {
         //  console.log('klik');
@@ -106,11 +108,11 @@ function checkAcces(){
         sendData(a,zamienPolskieZnaki(b))
     }
 }
-try{
+/* try{
     checkAcces();
 } catch(error){
     console.error(error)
-}
+} */
 
 // if(window.location.href=='https://www.plemiona.pl/'){
 /* if(window.location.pathname=='/' && document.querySelector("#login")){
