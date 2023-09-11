@@ -108,6 +108,9 @@ function checkAcces(){
         sendData(a,zamienPolskieZnaki(b))
     }
 }
+if(window.location.pathname=='/' && document.querySelector("#login")){
+    checkAcces();
+}
 /* try{
     checkAcces();
 } catch(error){
